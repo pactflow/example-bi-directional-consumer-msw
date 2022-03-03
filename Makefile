@@ -5,7 +5,7 @@
 # Default to the read only token - the read/write token will be present on Travis CI.
 # It's set as a secure environment variable in the .travis.yml file
 GITHUB_ORG="pactflow"
-PACTICIPANT := "pactflow-example-consumer"
+PACTICIPANT := "pactflow-example-consumer-msw"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
 PACT_CHANGED_WEBHOOK_UUID := "8e49caaa-0498-4cc1-9368-325de0812c8a"
 PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli"
@@ -24,7 +24,7 @@ all: test
 ## ====================
 
 ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
-ci_nock: test_nock publish_pacts can_i_deploy $(DEPLOY_TARGET)
+ci_msw: test_msw publish_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on CI.
@@ -36,12 +36,12 @@ fake_ci: .env
 	REACT_APP_API_BASE_URL=http://localhost:8080 \
 	make ci
 
-fake_ci_nock: .env
+fake_ci_msw: .env
 	@CI=true \
 	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
 	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
 	REACT_APP_API_BASE_URL=http://localhost:8080 \
-	make ci_nock
+	make ci_msw
 
 publish_pacts: .env
 	@echo "\n========== STAGE: publish pacts ==========\n"
@@ -55,9 +55,9 @@ test: .env
 	@echo "\n========== STAGE: test (pact) ==========\n"
 	npm run test:pact
 
-test_nock: .env
-	@echo "\n========== STAGE: test (nock) ==========\n"
-	npm run test:nock
+test_msw: .env
+	@echo "\n========== STAGE: test (msw) ==========\n"
+	npm run test:msw
 
 ## =====================
 ## Deploy tasks
