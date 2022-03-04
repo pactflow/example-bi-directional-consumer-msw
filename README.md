@@ -8,11 +8,11 @@ It is using a public tenant on Pactflow, which you can access [here](https://tes
 
 Unlike with Pact, the provider does not need to replay any tests to ensure it remains compatible with its consumers. This is achieved with a call to "can-i-deploy", which performs a cross-contract validation, ensuring any consumer consumes a valid subset of the OAS for the provider.
 
-![Consumer Test](docs/consumer-scope.png 'Consumer Test')
+![Consumer Test](docs/consumer-scope.png "Consumer Test")
 
 When you run the CI pipeline (see below for doing this), the pipeline should perform the following activities (simplified):
 
-![Consumer Pipeline](docs/consumer-pipeline.png 'Consumer Pipeline')
+![Consumer Pipeline](docs/consumer-pipeline.png "Consumer Pipeline")
 
 ### Pre-requisites
 
@@ -37,15 +37,10 @@ To be able to run some of the commands locally, you will need to export the foll
 
 Reuse your API mocks generated with MSW and generate pacts from specified interactions using [msw-pact](https://www.npmjs.com/package/msw-pact)
 
-- `make test_msw` - run msw test locally
-- `make fake_ci_msw` - emulate the CI process locally
+- `make test` - run msw test locally
+- `make fake_ci` - emulate the CI process locally
 
 The test file can be seen here `./src/api.msw.spec.js`
-
-A traditional pact file is also available here `./src/api.pact.spec.js`
-
-- `make test` - run pact test locally
-- `make fake_ci` - emulate the CI process locally
 
 ## Key points
 

@@ -10,16 +10,13 @@
     "react-router": "latest",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
-    "spectre.css": "^0.5.9",
-    "swagger-mock-validator": "^10.0.0"
+    "spectre.css": "^0.5.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test",
     "eject": "react-scripts eject",
-    "test:pact": "cross-env CI=true react-scripts test --testTimeout 30000 pact.spec.js",
-    "test:msw": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js"
+    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,8 +34,6 @@
     ]
   },
   "devDependencies": {
-    "@pact-foundation/pact": "^9.17.2",
-    "@pact-foundation/pact-node": "^10.17.1",
     "@testing-library/jest-dom": "4.2.4",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",

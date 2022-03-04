@@ -1,4 +1,4 @@
-# Why are we using a Makefile? Pactflow has around 30 example consumer and provider projects that show how to use Pact. 
+# Why are we using a Makefile? Pactflow has around 30 example consumer and provider projects that show how to use Pact.
 # We often use them for demos and workshops, and Makefiles allow us to provide a consistent language and platform agnostic interface
 # for each project. You do not need to use Makefiles to use Pact in your own project!
 
@@ -24,7 +24,6 @@ all: test
 ## ====================
 
 ci: test publish_pacts can_i_deploy $(DEPLOY_TARGET)
-ci_msw: test_msw publish_pacts can_i_deploy $(DEPLOY_TARGET)
 
 # Run the ci target from a developer machine with the environment variables
 # set as if it was on CI.
@@ -36,13 +35,6 @@ fake_ci: .env
 	REACT_APP_API_BASE_URL=http://localhost:8080 \
 	make ci
 
-fake_ci_msw: .env
-	@CI=true \
-	GIT_COMMIT=`git rev-parse --short HEAD`+`date +%s` \
-	GIT_BRANCH=`git rev-parse --abbrev-ref HEAD` \
-	REACT_APP_API_BASE_URL=http://localhost:8080 \
-	make ci_msw
-
 publish_pacts: .env
 	@echo "\n========== STAGE: publish pacts ==========\n"
 	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --tag ${GIT_BRANCH}
@@ -52,12 +44,8 @@ publish_pacts: .env
 ## =====================
 
 test: .env
-	@echo "\n========== STAGE: test (pact) ==========\n"
-	npm run test:pact
-
-test_msw: .env
 	@echo "\n========== STAGE: test (msw) ==========\n"
-	npm run test:msw
+	npm run test
 
 ## =====================
 ## Deploy tasks
