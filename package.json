@@ -19,7 +19,7 @@
     "test": "cross-env CI=true react-scripts test",
     "eject": "react-scripts eject",
     "test:pact": "cross-env CI=true react-scripts test --testTimeout 30000 pact.spec.js",
-    "test:msw": "cross-env CI=true react-scripts test --testTimeout 30000 msw.spec.js"
+    "test:msw": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js"
   },
   "eslintConfig": {
     "extends": "react-app"
