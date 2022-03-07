@@ -14,7 +14,8 @@ const mswPact = setupMswPact({
     providers: {
       [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider']: ['products']
     },
-    pactOutDir: './pacts'
+    pactOutDir: './pacts',
+    excludeHeaders: ['x-powered-by']
   },
 });
 
