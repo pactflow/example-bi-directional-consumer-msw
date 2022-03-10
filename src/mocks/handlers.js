@@ -10,22 +10,22 @@ export const handlers = [
           {
             "id": "09",
             "type": "CREDIT_CARD",
-            // "name": "Gem Visa",
-            "version": "v1",
+            "name": "Gem Visa",
+            // "version": "v1",
             // "price": 99.99
           },
           {
             "id": "10",
             "type": "CREDIT_CARD",
-            // "name": "28 Degrees",
-            "version": "v1",
+            "name": "28 Degrees",
+            // "version": "v1",
             // "price": 49.49
           },
           {
             "id": "11",
             "type": "PERSONAL_LOAN",
-            // "name": "MyFlexiPay",
-            "version": "v2",
+            "name": "MyFlexiPay",
+            // "version": "v2",
             // "price": 16.5
           }
         ]
@@ -39,8 +39,8 @@ export const handlers = [
         {
           "id": "10",
           "type": "CREDIT_CARD",
-          // "name": "28 Degrees",
-          "version": "v1",
+          "name": "28 Degrees",
+          // "version": "v1",
           // "price": 49.49
         }
 
