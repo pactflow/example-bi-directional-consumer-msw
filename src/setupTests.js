@@ -5,9 +5,9 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import { server } from './mocks/server'
-import { setupMswPact } from "msw-pact";
+import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter";
 
-const mswPact = setupMswPact({
+const mswPact = setupPactMswAdapter({
   server,
   options: {
     consumer: process.env.PACT_CONSUMER ? process.env.PACT_CONSUMER : 'pactflow-example-consumer-msw',
@@ -26,11 +26,11 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  // mswPact.newTest();
+  mswPact.newTest();
 });
 
 afterEach(() => {
-  // mswPact.verifyTest();
+  mswPact.verifyTest();
   // Reset any runtime handlers tests may use.
   server.resetHandlers()
 })

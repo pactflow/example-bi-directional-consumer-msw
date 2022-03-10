@@ -35,8 +35,9 @@ To be able to run some of the commands locally, you will need to export the foll
 
 #### Use case with Mock Service Worker
 
-Reuse your API mocks generated with MSW and generate pacts from specified interactions using [msw-pact](https://www.npmjs.com/package/msw-pact)
+Reuse your API mocks generated with MSW and generate pacts from specified interactions using [pact-msw-adapter](https://www.npmjs.com/package/@pactflow/pact-msw-adapter)
 
+- `make clean` - ensure previous pacts are cleared
 - `make test` - run msw test locally
 - `make fake_ci` - emulate the CI process locally
 
