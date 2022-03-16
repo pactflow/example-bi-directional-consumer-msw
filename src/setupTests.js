@@ -12,7 +12,7 @@ const mswPact = setupPactMswAdapter({
   options: {
     consumer: process.env.PACT_CONSUMER ? process.env.PACT_CONSUMER : 'pactflow-example-consumer-msw',
     providers: {
-      [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider-dredd']: ['products']
+      [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider-dredd']: ['products', 'product']
     },
     pactOutDir: './pacts',
     excludeHeaders: ['x-powered-by']
