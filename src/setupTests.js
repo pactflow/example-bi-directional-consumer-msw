@@ -10,9 +10,9 @@ import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter";
 const mswPact = setupPactMswAdapter({
   server,
   options: {
-    consumer: process.env.PACT_CONSUMER ? process.env.PACT_CONSUMER : 'pactflow-example-consumer-msw',
+    consumer: process.env.PACT_CONSUMER ? process.env.PACT_CONSUMER : 'pactflow-example-bi-directional-consumer-msw',
     providers: {
-      [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider-dredd']: ['products', 'product']
+      [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-bi-directional-provider-dredd']: ['products', 'product']
     },
     pactOutDir: './pacts',
     excludeHeaders: ['x-powered-by']
