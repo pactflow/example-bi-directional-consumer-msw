@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.21.1",
-    "prop-types": "latest",
-    "react": "^16.13.1",
-    "react-dom": "16.12.0",
-    "react-router": "latest",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
+    "axios": "^1.7.9",
+    "prop-types": "15.8.1",
+    "react": "^19.0.0",
+    "react-dom": "19.0.0",
+    "react-router": "^7.2.0",
+    "react-router-dom": "^7.2.0",
+    "react-scripts": "5.0.1",
     "spectre.css": "^0.5.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js"
+    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,20 +34,12 @@
     ]
   },
   "devDependencies": {
-    "@pactflow/pact-msw-adapter": "^1.2.0",
-    "@testing-library/jest-dom": "4.2.4",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
-    "babel-eslint": "^10.1.0",
+    "@pactflow/pact-msw-adapter": "^1.5.0",
+    "@testing-library/jest-dom": "6.6.3",
     "cross-env": "^7.0.3",
-    "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-react-app": "^5.2.1",
-    "eslint-plugin-flowtype": "^3.13.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.21.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "msw": "^0.42.0"
+    "@testing-library/react": "16.2.0",
+    "@testing-library/user-event": "14.6.1",
+    "dotenv": "16.4.7",
+    "msw": "^0.42.3"
   }
 }
