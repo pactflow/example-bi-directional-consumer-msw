@@ -2,6 +2,7 @@
   "name": "consumer",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "axios": "^1.7.9",
     "prop-types": "15.8.1",
@@ -23,10 +24,8 @@
     "test:vite": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run msw.spec.ts",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "lint": "eslint . --ext ts,tsx --max-warnings 0",
     "type-check": "tsc --noEmit"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -41,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@pactflow/pact-msw-adapter": "^3.0.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
@@ -51,9 +51,13 @@
     "@vitejs/plugin-react": "^4.7.0",
     "cross-env": "10.1.0",
     "dotenv": "17.2.4",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "jsdom": "^26.1.0",
     "msw": "^2.12.9",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0",
     "vite": "^6.4.1",
     "vitest": "^3.2.4"
   }
