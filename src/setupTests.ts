@@ -4,19 +4,20 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
 import { server } from './mocks/server'
-import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter";
+import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter"
+import { beforeAll, beforeEach, afterEach, afterAll } from 'vitest'
 
 const mswPact = setupPactMswAdapter({
   server,
   options: {
-    consumer: process.env.PACT_CONSUMER ? process.env.PACT_CONSUMER : 'pactflow-example-bi-directional-consumer-msw',
+    consumer: import.meta.env.PACT_CONSUMER ? import.meta.env.PACT_CONSUMER : 'pactflow-example-bi-directional-consumer-msw',
     providers: {
-      [process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-bi-directional-provider-dredd']: ['products', 'product']
+      [import.meta.env.PACT_PROVIDER ? import.meta.env.PACT_PROVIDER : 'pactflow-example-bi-directional-provider-dredd']: ['products', 'product']
     },
     pactOutDir: './pacts',
     excludeHeaders: ['x-powered-by']
   },
-});
+})
 
 
 beforeAll(() => {
@@ -25,18 +26,18 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
-  mswPact.newTest();
-});
+  mswPact.newTest()
+})
 
 afterEach(() => {
-  mswPact.verifyTest();
+  mswPact.verifyTest()
   // Reset any runtime handlers tests may use.
   server.resetHandlers()
 })
 
 afterAll(async () => {
-  await mswPact.writeToFile(); // writes the pacts to a file
-  mswPact.clear();
+  await mswPact.writeToFile() // writes the pacts to a file
+  mswPact.clear()
   // Clean up once the tests are done.
   server.close()
 })

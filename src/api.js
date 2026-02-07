@@ -6,10 +6,10 @@ export class API {
     if (url === undefined || url === "") {
       url = process.env.REACT_APP_API_BASE_URL;
     }
-    if (url.endsWith("/")) {
+    if (url?.endsWith("/")) {
       url = url.substr(0, url.length - 1)
     }
-    this.url = url
+    this.url = url || ""
   }
 
   withPath(path) {

@@ -7,16 +7,23 @@
     "prop-types": "15.8.1",
     "react": "^19.0.0",
     "react-dom": "19.2.4",
-    "react-router": "^7.2.0",
-    "react-router-dom": "^7.2.0",
+    "react-router": "^7.13.0",
+    "react-router-dom": "^7.13.0",
     "react-scripts": "5.0.1",
     "spectre.css": "^0.5.9"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:old": "react-scripts build",
+    "preview": "vite preview",
     "eject": "react-scripts eject",
-    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js --transformIgnorePatterns \"node_modules/(?!axios)/\""
+    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "test:vite": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run msw.spec.ts",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "type-check": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,12 +41,20 @@
     ]
   },
   "devDependencies": {
-    "@pactflow/pact-msw-adapter": "1.5.0",
+    "@pactflow/pact-msw-adapter": "^3.0.1",
     "@testing-library/jest-dom": "6.9.1",
-    "cross-env": "10.1.0",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
+    "@types/node": "^22.19.9",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "cross-env": "10.1.0",
     "dotenv": "17.2.4",
-    "msw": "0.42.3"
+    "jsdom": "^26.1.0",
+    "msw": "^2.12.9",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vitest": "^3.2.4"
   }
 }
