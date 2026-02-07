@@ -1,13 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Layout from "./Layout";
-import Heading from "./Heading";
+import { Component, type ReactNode } from 'react'
+import Layout from "./Layout"
+import Heading from "./Heading"
 
-export default class ErrorBoundary extends React.Component {
-  state = { has_error: false };
+interface ErrorBoundaryProps {
+  children: ReactNode
+}
+
+interface ErrorBoundaryState {
+  has_error: boolean
+}
+
+export default class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  state: ErrorBoundaryState = { has_error: false }
 
   componentDidCatch() {
-    this.setState({ has_error: true });
+    this.setState({ has_error: true })
   }
 
   render() {
@@ -21,7 +31,7 @@ export default class ErrorBoundary extends React.Component {
               style={{
                 height: "100%",
               }}
-              src={"/sad_panda.gif"}
+              src="/sad_panda.gif"
               alt="sad_panda"
             />
             <pre
@@ -32,12 +42,8 @@ export default class ErrorBoundary extends React.Component {
             ></pre>
           </div>
         </Layout>
-      );
+      )
     }
-    return this.props.children;
+    return this.props.children
   }
 }
-
-ErrorBoundary.propTypes = {
-  children: PropTypes.object.isRequired,
-};
