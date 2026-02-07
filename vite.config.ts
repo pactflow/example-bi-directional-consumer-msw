@@ -30,25 +30,4 @@ export default defineConfig({
   // Environment variable prefix (Vite uses VITE_ by default)
   // But we need to support REACT_APP_ for backward compatibility
   envPrefix: ['VITE_', 'REACT_APP_'],
-
-  // Test configuration for Vitest
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-    css: true,
-    // Coverage configuration
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/setupTests.ts',
-      ],
-    },
-    // Match test files
-    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    // Timeout for tests
-    testTimeout: 30000,
-  },
 })
