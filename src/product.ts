@@ -1,0 +1,13 @@
+import type { ProductData } from './types/product'
+
+export class Product implements ProductData {
+  id: string
+  name: string
+  type: string
+
+  constructor({ id, name, type }: ProductData) {
+    this.id = id
+    this.name = name
+    this.type = type
+  }
+}
