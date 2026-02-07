@@ -1,4 +1,4 @@
-import { useState, useEffect, type ChangeEvent } from 'react'
+import { useState, useEffect, useMemo, type ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import 'spectre.css/dist/spectre.min.css'
 import 'spectre.css/dist/spectre-icons.min.css'
@@ -57,7 +57,6 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [searchText, setSearchText] = useState('')
   const [products, setProducts] = useState<Product[]>([])
-  const [visibleProducts, setVisibleProducts] = useState<Product[]>([])
 
   useEffect(() => {
     API.getAllProducts()
@@ -70,18 +69,16 @@ function App() {
       })
   }, [])
 
-  useEffect(() => {
-    const findProducts = (search: string) => {
-      const lowerSearch = search.toLowerCase()
-      return products.filter(
-        (p) =>
-          p.id.toLowerCase().includes(lowerSearch) ||
-          p.name.toLowerCase().includes(lowerSearch) ||
-          p.type.toLowerCase().includes(lowerSearch)
-      )
-    }
+  const visibleProducts = useMemo(() => {
+    if (!searchText) return products
 
-    setVisibleProducts(searchText ? findProducts(searchText) : products)
+    const lowerSearch = searchText.toLowerCase()
+    return products.filter(
+      (p) =>
+        p.id.toLowerCase().includes(lowerSearch) ||
+        p.name.toLowerCase().includes(lowerSearch) ||
+        p.type.toLowerCase().includes(lowerSearch)
+    )
   }, [searchText, products])
 
   const onSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
