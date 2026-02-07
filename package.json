@@ -5,39 +5,21 @@
   "type": "module",
   "dependencies": {
     "axios": "^1.7.9",
-    "prop-types": "15.8.1",
     "react": "^19.0.0",
     "react-dom": "19.2.4",
     "react-router": "^7.13.0",
     "react-router-dom": "^7.13.0",
-    "react-scripts": "5.0.1",
     "spectre.css": "^0.5.9"
   },
   "scripts": {
-    "start": "react-scripts start",
     "dev": "vite",
     "build": "tsc && vite build",
-    "build:old": "react-scripts build",
     "preview": "vite preview",
-    "eject": "react-scripts eject",
-    "test": "cross-env CI=true PROVIDER_APP_BASE_URL=http://localhost:3000 react-scripts test --testTimeout 30000 msw.spec.js --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "test:vite": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run msw.spec.ts",
+    "test": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run msw.spec.ts",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --max-warnings 0",
     "type-check": "tsc --noEmit"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -49,8 +31,6 @@
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.7.0",
-    "cross-env": "10.1.0",
-    "dotenv": "17.2.4",
     "eslint": "^9.39.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
