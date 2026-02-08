@@ -1,42 +1,54 @@
 # Example TypeScript/React Consumer - Mock Service Worker (BYO Adapter)
 
-<!-- Build Badge -->
-
 [![Build](https://github.com/pactflow/example-bi-directional-consumer-msw/actions/workflows/build.yml/badge.svg)](https://github.com/pactflow/example-bi-directional-consumer-msw/actions/workflows/build.yml)
-
-<!-- Can I Deploy Badge -->
-
 [![Can I deploy Status](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-msw/branches/master/latest-version/can-i-deploy/to-environment/production/badge)](https://testdemo.pactflow.io/pacticipants/pactflow-example-bi-directional-consumer-msw/branches/master/latest-version/can-i-deploy/to-environment/production/badge)
 
-1. [Example TypeScript/React Consumer - Mock Service Worker (BYO Adapter)](#example-typescriptreact-consumer---mock-service-worker-byo-adapter)
-   1. [Overview of Example](#overview-of-example)
-      1. [Key points with Mock Service Worker](#key-points-with-mock-service-worker)
-      2. [Modern Tech Stack](#modern-tech-stack)
-   2. [Overview of Part of Bi-Directional Contract Testing Flow](#overview-of-part-of-bi-directional-contract-testing-flow)
-   3. [Compatible with Providers](#compatible-with-providers)
-   4. [Pre-requisites](#pre-requisites)
-      1. [Environment variables](#environment-variables)
-   5. [Usage](#usage)
-      1. [Steps](#steps)
-      2. [Use case with pact-msw-adapter](#use-case-with-pact-msw-adapter)
-   6. [OS/platform-specific considerations](#osplatform-specific-considerations)
-      1. [Windows](#windows)
-   7. [Caveats](#caveats)
-   8. [Related topics / posts / discussions](#related-topics--posts--discussions)
-   9. [Other examples of how to do this form of testing](#other-examples-of-how-to-do-this-form-of-testing)
-   10. [Found an issue?](#found-an-issue)
-
 ## Overview of Example
-
-<!-- Consumer Overview -->
 
 This is an example of a TypeScript/React "Product" API consumer that uses Mock-Service-Worker, Pact, [PactFlow](https://pactflow.io) and GitHub Actions to generate and publish Pact consumer contracts.
 
 It performs pre-deployment cross-compatibility checks to ensure that it is compatible with specified providers using the Bi-Directional contract capability of PactFlow.
 
-<!-- General -->
-
 See the full [PactFlow Bi-Directional Workshop](https://docs.pactflow.io/docs/workshops/bi-directional-contract-testing) for which this can be substituted in as the "consumer".
+
+## Quick Start
+
+Get up and running in 3 steps:
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Run tests and generate Pact contract
+npm test
+
+# 3. Check the generated contract
+ls -la pacts/
+```
+
+You should see a Pact contract file generated in the `pacts/` directory! This contract represents the consumer's expectations of the Provider API.
+
+> [!TIP]
+> To see the full CI/CD workflow locally, run `make fake_ci` (requires Docker and these environment variables: `PACT_BROKER_BASE_URL`, `PACT_BROKER_TOKEN`)
+
+## What is Bi-Directional Contract Testing?
+
+Bi-Directional Contract Testing is a contract testing approach that allows you to use your existing mock server (like MSW) and API specifications (like OpenAPI) to verify that services can work together.
+
+**How it works:**
+
+1. **Consumer Side** (this project): Your tests run against MSW mocks, and these mocks are automatically converted into a Pact contract that describes what the consumer expects from the provider
+2. **Provider Side**: The provider publishes their OpenAPI Specification (OAS) describing what they actually offer
+3. **PactFlow**: Compares the consumer's expectations (Pact) against the provider's specification (OAS) to ensure compatibility
+
+**Key Benefits:**
+
+- **Use Your Existing Tools**: Keep using MSW for mocking - no need to learn Pact-specific mocking
+- **Automated Compatibility Checks**: PactFlow automatically validates that your consumer expectations match the provider's API before deployment
+- **Fast Feedback**: Know immediately if a provider change will break your consumer, or if your consumer expects something the provider doesn't offer
+- **Safe Deployments**: The `can-i-deploy` check ensures you only deploy compatible versions
+
+Unlike traditional Pact (which requires both sides to use Pact), bi-directional testing lets each side use their preferred tools while still maintaining contract safety.
 
 ### Key points with Mock Service Worker
 
@@ -58,8 +70,6 @@ This project uses modern web development tools:
 - **MSW v2** - Modern API mocking
 
 ## Overview of Part of Bi-Directional Contract Testing Flow
-
-<!-- Consumer Overview -->
 
 In the following diagram, you can see how the consumer testing process works - it's the same as the current Pact process.
 
@@ -139,8 +149,6 @@ graph TB
 
 ## Compatible with Providers
 
-<!-- Provider Compatibility -->
-
 This project is currently compatible with the following provider(s):
 
 - [pactflow-example-bi-directional-provider-dredd](https://github.com/pactflow/example-bi-directional-provider-dredd)
@@ -165,8 +173,6 @@ To be able to run some of the commands locally, you will need to export the foll
 - `PACT_BROKER_TOKEN`: a valid [API token](https://docs.pactflow.io/docs/getting-started/#configuring-your-api-token) for PactFlow
 - `PACT_BROKER_BASE_URL`: a fully qualified domain name with protocol to your pact broker e.g. <https://testdemo.pactflow.io>
 
-<!-- CONSUMER env vars -->
-
 Set `PACT_PROVIDER` to one of the following:
 
 - `PACT_PROVIDER=pactflow-example-bi-directional-provider-dredd`: Dredd - (<https://github.com/pactflow/example-bi-directional-provider-dredd>)
@@ -175,17 +181,47 @@ Set `PACT_PROVIDER` to one of the following:
 
 ## Usage
 
-### Steps
+### Running the Application
 
-- `npm install` - install dependencies
-- `npm run dev` - start the Vite development server
-- `npm test` - run tests with Vitest
-- `npm run build` - build for production with TypeScript and Vite
-- `npm run lint` - run ESLint
-- `npm run type-check` - run TypeScript type checking
-- `make clean` - ensure previous pacts are cleared
-- `make test` - run msw test locally
-- `make fake_ci` - emulate the CI process locally
+Start the development server to see the Product website:
+
+```bash
+npm install
+npm run dev
+```
+
+The app will open at `http://localhost:3000` and display a list of products.
+
+### Running Tests
+
+Run the test suite with Vitest:
+
+```bash
+npm test
+```
+
+This runs all tests, including the MSW-based API tests that generate the Pact contract which will be located in the `pacts/` directory.
+
+### Development Commands
+
+Useful commands for development:
+
+```bash
+# Type checking
+npm run type-check
+
+# Linting
+npm run lint
+
+# Production build
+npm run build
+
+# Preview production build
+npm run preview
+
+# Emulate the full CI pipeline locally (requires Docker, PACT_BROKER_BASE_URL, PACT_BROKER_TOKEN)
+make fake_ci
+```
 
 ### Use case with pact-msw-adapter
 
@@ -221,11 +257,11 @@ You can still try this example locally on Windows using PowerShell and running c
 1. Publish the pact that was generated. The step uses the pact-cli docker image to publish the pact to your pactflow account.
   The path for `<path_to_project_root>` needs to be converted from Windows paths to UNIX ones as the Docker container is using UNIX. Either hard code this or set it as another environment variable.
 
-      `C:\Users\Person\Documents\example-bi-directional-consumer-dotnet`
+      `C:\Users\Person\Documents\example-bi-directional-consumer-msw`
 
       becomes
 
-      `/c/Users/Candy/Documents/PactFlow/example-bi-directional-consumer-dotnet`
+      `/c/Users/Person/Documents/example-bi-directional-consumer-msw`
 
       `$env:VARIABLE_NAME` refers to environment variables in Windows.
 
@@ -237,7 +273,7 @@ You can still try this example locally on Windows using PowerShell and running c
 1. Check can-i-deploy to see if your provider is compatible with your pact.
 
       ```
-      docker run --rm -v <path_to_project_root>:<path_to_project_root> -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli  broker can-i-deploy --pacticipant pactflow-example-bi-directional-consumer-dotnet --version $env:GIT_COMMIT --to-environment production  --retry-while-unknown 0 --retry-interval 10
+      docker run --rm -v <path_to_project_root>:<path_to_project_root> -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN pactfoundation/pact-cli  broker can-i-deploy --pacticipant pactflow-example-bi-directional-consumer-msw --version $env:GIT_COMMIT --to-environment production  --retry-while-unknown 0 --retry-interval 10
       ```
 
 1. Have a look at what other commands are available in the Makefile. All of them can be run locally from PowerShell by changing the Windows paths to UNIX format and replacing the environment variable references. Any variable referenced as `${VARIABLE}` can be changed to `$env:VARIABLE` to reference environment variables in PowerShell.
@@ -252,10 +288,6 @@ You can still try this example locally on Windows using PowerShell and running c
 
 - [Consumer Side Bi-Directional Contract Testing Guide](https://docs.pactflow.io/docs/bi-directional-contract-testing/consumer)
 - [Provider Side Bi-Directional Contract Testing Guide](https://docs.pactflow.io/docs/bi-directional-contract-testing/provider)
-
-## Other examples of how to do this form of testing
-
-- TBC
 
 ## Found an issue?
 
