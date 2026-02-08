@@ -55,6 +55,7 @@ function ProductTable({ products }: ProductTableProps) {
 
 function App() {
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
   const [searchText, setSearchText] = useState('')
   const [products, setProducts] = useState<Product[]>([])
 
@@ -65,9 +66,14 @@ function App() {
         setLoading(false)
       })
       .catch((e) => {
-        throw new Error(e.toString())
+        setError(new Error(e.toString()))
+        setLoading(false)
       })
   }, [])
+
+  if (error) {
+    throw error
+  }
 
   const visibleProducts = useMemo(() => {
     if (!searchText) return products
