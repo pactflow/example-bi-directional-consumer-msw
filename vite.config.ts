@@ -28,6 +28,6 @@ export default defineConfig({
   },
 
   // Environment variable prefix (Vite uses VITE_ by default)
-  // But we need to support REACT_APP_ for backward compatibility
-  envPrefix: ['VITE_', 'REACT_APP_'],
+  // Support PACT_ and PROVIDER_ for Pact ecosystem tooling
+  envPrefix: ['VITE_', 'PACT_', 'PROVIDER_'],
 })

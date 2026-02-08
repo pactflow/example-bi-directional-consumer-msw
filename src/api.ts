@@ -8,7 +8,7 @@ export class API {
   constructor(url?: string) {
     let apiUrl = url
     if (apiUrl === undefined || apiUrl === "") {
-      apiUrl = import.meta.env.REACT_APP_API_BASE_URL
+      apiUrl = import.meta.env.VITE_API_BASE_URL
     }
     if (apiUrl?.endsWith("/")) {
       apiUrl = apiUrl.slice(0, apiUrl.length - 1)
@@ -46,4 +46,4 @@ export class API {
   }
 }
 
-export default new API(import.meta.env.REACT_APP_API_BASE_URL)
+export default new API(import.meta.env.VITE_API_BASE_URL)

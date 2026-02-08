@@ -15,7 +15,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run msw.spec.ts",
+    "test": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run src/api.msw.spec.ts",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --max-warnings 0",
