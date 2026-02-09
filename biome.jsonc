@@ -1,0 +1,82 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+
+  // Code formatting and organization suggestions
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+
+  // Formatting
+  "formatter": {
+    "useEditorconfig": true
+  },
+
+  // Enable integration with VCS
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+
+  // Linting default rules
+  // I prefer being very strict with lints, and then disabling specific rules as
+  // needed.
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "test": "all",
+      "react": "all"
+    },
+    "rules": {
+      "a11y": "error",
+      "complexity": "error",
+      "correctness": "error",
+      "nursery": "off",
+      "performance": "error",
+      "recommended": true,
+      "security": "error",
+      "style": "error",
+      "suspicious": "error"
+    }
+  },
+
+  // Override settings
+  "overrides": [
+    {
+      "includes": ["**/*.tsx", "**/*.jsx"],
+      "linter": {
+        "rules": {
+          "performance": {
+            // Next.js specific rule - not applicable to Vite/React projects
+            "noImgElement": "off"
+          },
+          "suspicious": {
+            // React specific rule - not applicable to Vite/React projects
+            "noReactSpecificProps": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            // Test files can have longer functions with multiple test cases
+            "noExcessiveLinesPerFunction": "off"
+          }
+        }
+      }
+    }
+  ]
+}

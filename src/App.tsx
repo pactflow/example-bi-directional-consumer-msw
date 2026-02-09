@@ -1,15 +1,15 @@
-import { useState, useEffect, useMemo, type ChangeEvent } from 'react'
-import { Link } from 'react-router-dom'
-import 'spectre.css/dist/spectre.min.css'
-import 'spectre.css/dist/spectre-icons.min.css'
-import 'spectre.css/dist/spectre-exp.min.css'
-import Heading from "./Heading"
-import Layout from "./Layout"
-import API from "./api"
-import type { Product } from './product'
+import { type ChangeEvent, useEffect, useId, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import "spectre.css/dist/spectre.min.css";
+import "spectre.css/dist/spectre-icons.min.css";
+import "spectre.css/dist/spectre-exp.min.css";
+import { api } from "./api.ts";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
+import type { Product } from "./product.ts";
 
 interface ProductTableRowProps {
-  product: Product
+  product: Product;
 }
 
 function ProductTableRow({ product }: ProductTableRowProps) {
@@ -27,20 +27,18 @@ function ProductTableRow({ product }: ProductTableRowProps) {
         </Link>
       </td>
     </tr>
-  )
+  );
 }
 
 interface ProductTableProps {
-  products: Product[]
+  products: Product[];
 }
 
 function ProductTable({ products }: ProductTableProps) {
-  const rows = products.map((p) => (
-    <ProductTableRow key={p.id} product={p} />
-  ))
+  const rows = products.map((p) => <ProductTableRow key={p.id} product={p} />);
 
   return (
-    <table className="table table-striped table-hover">
+    <table className="table-striped table-hover table">
       <thead>
         <tr>
           <th>Name</th>
@@ -50,56 +48,60 @@ function ProductTable({ products }: ProductTableProps) {
       </thead>
       <tbody>{rows}</tbody>
     </table>
-  )
+  );
 }
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-  const [searchText, setSearchText] = useState('')
-  const [products, setProducts] = useState<Product[]>([])
+  const inputId = useId();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const [searchText, setSearchText] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    API.getAllProducts()
+    api
+      .getAllProducts()
       .then((r) => {
-        setProducts(r)
-        setLoading(false)
+        setProducts(r);
+        setLoading(false);
       })
       .catch((e) => {
-        setError(new Error(e.toString()))
-        setLoading(false)
-      })
-  }, [])
+        setError(new Error(e.toString()));
+        setLoading(false);
+      });
+  }, []);
 
   if (error) {
-    throw error
+    throw error;
   }
 
   const visibleProducts = useMemo(() => {
-    if (!searchText) return products
+    if (!searchText) {
+      return products;
+    }
 
-    const lowerSearch = searchText.toLowerCase()
+    const lowerSearch = searchText.toLowerCase();
     return products.filter(
       (p) =>
         p.id.toLowerCase().includes(lowerSearch) ||
         p.name.toLowerCase().includes(lowerSearch) ||
-        p.type.toLowerCase().includes(lowerSearch)
-    )
-  }, [searchText, products])
+        p.type.toLowerCase().includes(lowerSearch),
+    );
+  }, [searchText, products]);
 
   const onSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value)
-  }
+    setSearchText(e.target.value);
+  };
 
   return (
     <Layout>
       <Heading text="Products" href="/" />
       <div className="form-group col-2">
-        <label className="form-label" htmlFor="input-product-search">
+        <label className="form-label" htmlFor={inputId}>
           Search
         </label>
         <input
-          id="input-product-search"
+          id={inputId}
           className="form-input"
           type="text"
           value={searchText}
@@ -112,7 +114,7 @@ function App() {
         <ProductTable products={visibleProducts} />
       )}
     </Layout>
-  )
+  );
 }
 
-export default App
+export { App };
