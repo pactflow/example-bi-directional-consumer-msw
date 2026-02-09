@@ -65,7 +65,7 @@ This project uses modern web development tools:
 - **TypeScript** - Full type safety with ESNext target
 - **Vite** - Fast build tool and dev server
 - **Vitest** - Modern test runner with native ESM support
-- **ESLint** - Flat config format with TypeScript support
+- **Biome** - Fast formatter and linter with TypeScript and React support
 - **React Router v7** - Latest routing library
 - **MSW v2** - Modern API mocking
 
@@ -210,8 +210,10 @@ Useful commands for development:
 # Type checking
 npm run type-check
 
-# Linting
-npm run lint
+# Check linting and formatting
+npm run check
+# Variant to auto-fix issues
+npm run check:fix
 
 # Production build
 npm run build

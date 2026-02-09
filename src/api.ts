@@ -1,49 +1,52 @@
-import axios from 'axios'
-import { Product } from './product'
-import type { ProductData } from './types/product'
+import axios from "axios";
+import { Product } from "./product.ts";
+import type { ProductData } from "./types/product.ts";
 
-export class API {
-  private url: string
+export class Api {
+  private readonly url: string;
 
   constructor(url?: string) {
-    let apiUrl = url
+    let apiUrl = url;
     if (apiUrl === undefined || apiUrl === "") {
-      apiUrl = import.meta.env.VITE_API_BASE_URL
+      apiUrl = import.meta.env.VITE_API_BASE_URL;
     }
     if (apiUrl?.endsWith("/")) {
-      apiUrl = apiUrl.slice(0, apiUrl.length - 1)
+      apiUrl = apiUrl.slice(0, apiUrl.length - 1);
     }
-    this.url = apiUrl || ""
+    this.url = apiUrl || "";
   }
 
   private withPath(path: string): string {
-    if (!path.startsWith("/")) {
-      path = "/" + path
+    let normalizedPath = path;
+    if (!normalizedPath.startsWith("/")) {
+      normalizedPath = `/${normalizedPath}`;
     }
-    return `${this.url}${path}`
+    return `${this.url}${normalizedPath}`;
   }
 
   private generateAuthToken(): string {
-    return "Bearer " + new Date().toISOString()
+    return `Bearer ${new Date().toISOString()}`;
   }
 
-  async getAllProducts(): Promise<Product[]> {
-    return axios.get<ProductData[]>(this.withPath("/products"), {
-      headers: {
-        "Authorization": this.generateAuthToken()
-      }
-    })
-    .then(r => r.data.map(p => new Product(p)))
+  getAllProducts(): Promise<Product[]> {
+    return axios
+      .get<ProductData[]>(this.withPath("/products"), {
+        headers: {
+          authorization: this.generateAuthToken(),
+        },
+      })
+      .then((r) => r.data.map((p) => new Product(p)));
   }
 
-  async getProduct(id: string): Promise<Product> {
-    return axios.get<ProductData>(this.withPath("/product/" + id), {
-      headers: {
-        "Authorization": this.generateAuthToken()
-      }
-    })
-    .then(r => new Product(r.data))
+  getProduct(id: string): Promise<Product> {
+    return axios
+      .get<ProductData>(this.withPath(`/product/${id}`), {
+        headers: {
+          authorization: this.generateAuthToken(),
+        },
+      })
+      .then((r) => new Product(r.data));
   }
 }
 
-export default new API(import.meta.env.VITE_API_BASE_URL)
+export const api = new Api(import.meta.env.VITE_API_BASE_URL);

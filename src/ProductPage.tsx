@@ -1,34 +1,37 @@
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import 'spectre.css/dist/spectre.min.css'
-import 'spectre.css/dist/spectre-icons.min.css'
-import 'spectre.css/dist/spectre-exp.min.css'
-import Layout from './Layout'
-import Heading from './Heading'
-import API from './api'
-import type { Product } from './product'
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "spectre.css/dist/spectre.min.css";
+import "spectre.css/dist/spectre-icons.min.css";
+import "spectre.css/dist/spectre-exp.min.css";
+import { api } from "./api.ts";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
+import type { Product } from "./product.ts";
 
 function ProductPage() {
-  const { id } = useParams<{ id: string }>()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [product, setProduct] = useState<Product | null>(null)
+  const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    if (!id) return
+    if (!id) {
+      return;
+    }
 
-    API.getProduct(id)
+    api
+      .getProduct(id)
       .then((r) => {
-        setProduct(r)
-        setLoading(false)
+        setProduct(r);
+        setLoading(false);
       })
       .catch(() => {
-        setError(true)
-      })
-  }, [id])
+        setError(true);
+      });
+  }, [id]);
 
   if (error) {
-    throw Error('unable to fetch product data')
+    throw new Error("unable to fetch product data");
   }
 
   const productInfo = product ? (
@@ -37,7 +40,7 @@ function ProductPage() {
       <p>Name: {product.name}</p>
       <p>Type: {product.type}</p>
     </div>
-  ) : null
+  ) : null;
 
   return (
     <Layout>
@@ -45,10 +48,10 @@ function ProductPage() {
       {loading ? (
         <div
           style={{
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
           className="loading loading-lg"
         />
@@ -56,7 +59,7 @@ function ProductPage() {
         productInfo
       )}
     </Layout>
-  )
+  );
 }
 
-export default ProductPage
+export { ProductPage };

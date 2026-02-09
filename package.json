@@ -18,11 +18,16 @@
     "test": "PROVIDER_APP_BASE_URL=http://localhost:3000 vitest run src/api.msw.spec.ts",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint . --ext ts,tsx --max-warnings 0",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write --unsafe .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write --unsafe .",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@biomejs/biome": "^2.3.14",
     "@pactflow/pact-msw-adapter": "^3.0.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
@@ -31,13 +36,9 @@
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.3",
-    "eslint": "^9.39.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "jsdom": "^28.0.0",
     "msw": "^2.12.9",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
   }

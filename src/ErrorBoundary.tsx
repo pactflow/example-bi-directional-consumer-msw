@@ -1,27 +1,27 @@
-import { Component, type ReactNode } from 'react'
-import Layout from "./Layout"
-import Heading from "./Heading"
+import { Component, type ReactNode } from "react";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
 
 interface ErrorBoundaryProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface ErrorBoundaryState {
-  has_error: boolean
+  hasError: boolean;
 }
 
-export default class ErrorBoundary extends Component<
+export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  state: ErrorBoundaryState = { has_error: false }
+  state: ErrorBoundaryState = { hasError: false };
 
   componentDidCatch() {
-    this.setState({ has_error: true })
+    this.setState({ hasError: true });
   }
 
   render() {
-    if (this.state.has_error) {
+    if (this.state.hasError) {
       return (
         <Layout>
           <Heading text="Sad times :(" href="/" />
@@ -33,17 +33,19 @@ export default class ErrorBoundary extends Component<
               }}
               src="/sad_panda.gif"
               alt="sad_panda"
+              width="400"
+              height="300"
             />
             <pre
               className="code column col-6"
               style={{
                 wordWrap: "break-word",
               }}
-            ></pre>
+            />
           </div>
         </Layout>
-      )
+      );
     }
-    return this.props.children
+    return this.props.children;
   }
 }
