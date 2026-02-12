@@ -1,27 +1,18 @@
-import axios from "axios";
+import axios, { type AxiosInstance } from "axios";
 import { Product } from "./product.ts";
 import type { ProductData } from "./types/product.ts";
 
 export class Api {
-  private readonly url: string;
+  private readonly client: AxiosInstance;
 
-  constructor(url?: string) {
-    let apiUrl = url;
-    if (apiUrl === undefined || apiUrl === "") {
-      apiUrl = import.meta.env.VITE_API_BASE_URL;
-    }
-    if (apiUrl?.endsWith("/")) {
-      apiUrl = apiUrl.slice(0, apiUrl.length - 1);
-    }
-    this.url = apiUrl || "";
-  }
-
-  private withPath(path: string): string {
-    let normalizedPath = path;
-    if (!normalizedPath.startsWith("/")) {
-      normalizedPath = `/${normalizedPath}`;
-    }
-    return `${this.url}${normalizedPath}`;
+  constructor(baseUrl?: string) {
+    this.client = axios.create({
+      // biome-ignore lint/style/useNamingConvention: baseURL is axios's official property name
+      baseURL: baseUrl || import.meta.env.PROVIDER_APP_BASE_URL || "",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   private generateAuthToken(): string {
@@ -29,24 +20,20 @@ export class Api {
   }
 
   getAllProducts(): Promise<Product[]> {
-    return axios
-      .get<ProductData[]>(this.withPath("/products"), {
-        headers: {
-          authorization: this.generateAuthToken(),
-        },
+    return this.client
+      .get<ProductData[]>("/products", {
+        headers: { authorization: this.generateAuthToken() },
       })
       .then((r) => r.data.map((p) => new Product(p)));
   }
 
   getProduct(id: string): Promise<Product> {
-    return axios
-      .get<ProductData>(this.withPath(`/product/${id}`), {
-        headers: {
-          authorization: this.generateAuthToken(),
-        },
+    return this.client
+      .get<ProductData>(`/product/${id}`, {
+        headers: { authorization: this.generateAuthToken() },
       })
       .then((r) => new Product(r.data));
   }
 }
 
-export const api = new Api(import.meta.env.VITE_API_BASE_URL);
+export const api = new Api();
