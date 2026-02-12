@@ -48,6 +48,16 @@
   // Override settings
   "overrides": [
     {
+      // Disable all linting and formatting for MSW service worker (generated file)
+      "includes": ["public/mockServiceWorker.js"],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
       "includes": ["**/*.tsx", "**/*.jsx"],
       "linter": {
         "rules": {
