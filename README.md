@@ -31,14 +31,26 @@ You should see a Pact contract file generated in the `pacts/` directory! This co
 > [!TIP]
 > To see the full CI/CD workflow locally, run `make fake_ci` (requires Docker and these environment variables: `PACT_BROKER_BASE_URL`, `PACT_BROKER_TOKEN`)
 
+### Running with Makefile vs Native Tools
+
+This project includes a Makefile for convenience, but you can also use npm and Docker commands directly:
+
+| Task | Makefile | Native Commands |
+|------|----------|-----------------|
+| Run tests | `make test` | `npm test` |
+| Full CI pipeline | `make fake_ci` | Set environment variables and run commands in sequence |
+
+> [!TIP]
+> The Makefile provides a consistent interface across PactFlow's 30+ example repositories. If you're unfamiliar with Make, use the native commands shown in the [Usage](#usage) section below.
+
 ## What is Bi-Directional Contract Testing?
 
 Bi-Directional Contract Testing is a contract testing approach that allows you to use your existing mock server (like MSW) and API specifications (like OpenAPI) to verify that services can work together.
 
 **How it works:**
 
-1. **Consumer Side** (this project): Your tests run against MSW mocks, and these mocks are automatically converted into a Pact contract that describes what the consumer expects from the provider
-2. **Provider Side**: The provider publishes their OpenAPI Specification (OAS) describing what they actually offer
+1. **Consumer Side** (this project): Your tests run against MSW mocks, generating a Pact contract as output that describes what the consumer expects from the provider. This contract is then uploaded to PactFlow.
+2. **Provider Side**: The provider has an OpenAPI Specification (OAS) that may be input to their tests. The combination of the test results validating the OAS, plus the OAS itself, forms the provider contract, which is then uploaded to PactFlow.
 3. **PactFlow**: Compares the consumer's expectations (Pact) against the provider's specification (OAS) to ensure compatibility
 
 **Key Benefits:**
@@ -58,16 +70,16 @@ This example:
 - Utilizes [MSW](https://mswjs.io/) to mock out the Product API provider
 - Utilizes [pact-msw-adapter](https://www.npmjs.com/package/@pactflow/pact-msw-adapter) to transform MSW mocks into Pact consumer contracts
 
-### Modern Tech Stack
+### Tech Stack
 
-This project uses modern web development tools:
+This project uses the following web development tools:
 
 - **TypeScript** - Full type safety with ESNext target
 - **Vite** - Fast build tool and dev server
 - **Vitest** - Modern test runner with native ESM support
 - **Biome** - Fast formatter and linter with TypeScript and React support
 - **React Router v7** - Latest routing library
-- **MSW v2** - Modern API mocking
+- **MSW v2** - API mocking for browser and Node.js
 
 ## Overview of Part of Bi-Directional Contract Testing Flow
 
@@ -86,7 +98,7 @@ graph LR
     Validation{Cross Contract<br/>Validation}
 
     Consumer -->|1. Run tests| Mock
-    Consumer -->|2. Produces| Contract
+    Mock -->|2. Generates| Contract
     Contract -->|3. Upload| PactFlow
     Provider -->|Provider<br/>Contract| ProviderTest
     ProviderTest -->|OAS| PactFlow
@@ -98,7 +110,10 @@ graph LR
     style Validation fill:#5cb85c
 ```
 
-The project uses a Makefile to simulate a very simple build pipeline with two stages - test and deploy.
+> [!NOTE]
+> The provider contract consists of both the OpenAPI Specification (OAS) and the test results that validate it. The OAS may be used as input to the provider's tests, and the validated OAS is what gets uploaded to PactFlow.
+
+The project uses a Makefile to simulate a very simple build pipeline with two stages - test and deploy. See the [table above](#running-with-makefile-vs-native-tools) for native command equivalents, or the detailed [Usage](#usage) section below for native npm and Docker commands.
 
 When you run the CI pipeline (see below for doing this), the pipeline should perform the following activities (simplified):
 
@@ -163,7 +178,7 @@ See [Environment variables](#environment-variables) on how to set these up.
 **Software**:
 
 - Tools listed at: <https://docs.pactflow.io/docs/workshops/ci-cd/set-up-ci/prerequisites/>
-- Modern Node.js (with ESNext support)
+- Node.js with ESNext support
 - A pactflow.io account with a valid [API token](https://docs.pactflow.io/docs/getting-started/#configuring-your-api-token)
 
 ### Environment variables
