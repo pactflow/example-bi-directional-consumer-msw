@@ -248,7 +248,9 @@ Key implementation files:
 
 - [`src/mocks/handlers.ts`](src/mocks/handlers.ts) - Defines MSW request handlers
 - [`src/mocks/server.ts`](src/mocks/server.ts) - Sets up the MSW server for Node.js testing
+- [`src/mocks/browser.ts`](src/mocks/browser.ts) - Sets up MSW for browser development
 - [`src/setupTests.ts`](src/setupTests.ts) - Configures test mocking and records MSW interactions as Pact contracts
+- [`public/mockServiceWorker.js`](public/mockServiceWorker.js) - MSW service worker (generated via `npx msw init public/`)
 
 ## OS/platform-specific considerations
 
