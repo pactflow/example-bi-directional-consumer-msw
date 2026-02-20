@@ -27,7 +27,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.1",
+    "@biomejs/biome": "2.4.2",
     "@pactflow/pact-msw-adapter": "3.0.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
