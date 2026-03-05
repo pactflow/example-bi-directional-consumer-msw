@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
 
   // Code formatting and organization suggestions
   "assist": {
@@ -61,6 +61,16 @@
       "includes": ["**/*.tsx", "**/*.jsx"],
       "linter": {
         "rules": {
+          "correctness": {
+            // noUnresolvedImports produces false positives for React
+            "noUnresolvedImports": "off",
+            // Qwik-specific rule not applicable to this React project
+            "useQwikValidLexicalScope": "off"
+          },
+          "style": {
+            // noJsxLiterals enforces i18n wrapping not needed in this example repo
+            "noJsxLiterals": "off"
+          },
           "performance": {
             // Next.js specific rule - not applicable to Vite/React projects
             "noImgElement": "off"

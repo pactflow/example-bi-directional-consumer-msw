@@ -3,6 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
+// biome-ignore lint/correctness/noUnresolvedImports: pact-msw-adapter is not resolved by biome
 import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter";
 import { afterAll, afterEach, beforeAll, beforeEach } from "vitest";
 import { server } from "./mocks/server.ts";
