@@ -1,4 +1,11 @@
-import { type ChangeEvent, useEffect, useId, useMemo, useState } from "react";
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
@@ -89,9 +96,14 @@ function App() {
     );
   }, [searchText, products]);
 
-  const onSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onSearchTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  };
+  }, []);
+
+  let content = <ProductTable products={visibleProducts} />;
+  if (loading) {
+    content = <div className="loading loading-lg centered" />;
+  }
 
   return (
     <Layout>
@@ -108,11 +120,7 @@ function App() {
           onChange={onSearchTextChange}
         />
       </div>
-      {loading ? (
-        <div className="loading loading-lg centered" />
-      ) : (
-        <ProductTable products={visibleProducts} />
-      )}
+      {content}
     </Layout>
   );
 }
