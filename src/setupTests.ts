@@ -3,24 +3,23 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-// biome-ignore lint/correctness/noUnresolvedImports: pact-msw-adapter is not resolved by biome
 import { setupPactMswAdapter } from "@pactflow/pact-msw-adapter";
 import { afterAll, afterEach, beforeAll, beforeEach } from "vitest";
 import { server } from "./mocks/server.ts";
 
+const consumer =
+  import.meta.env.PACT_CONSUMER ||
+  "pactflow-example-bi-directional-consumer-msw";
+const provider =
+  import.meta.env.PACT_PROVIDER ||
+  "pactflow-example-bi-directional-provider-dredd";
+
 const mswPact = setupPactMswAdapter({
   server,
   options: {
-    consumer: import.meta.env.PACT_CONSUMER
-      ? import.meta.env.PACT_CONSUMER
-      : "pactflow-example-bi-directional-consumer-msw",
+    consumer,
     providers: {
-      [import.meta.env.PACT_PROVIDER
-        ? import.meta.env.PACT_PROVIDER
-        : "pactflow-example-bi-directional-provider-dredd"]: [
-        "products",
-        "product",
-      ],
+      [provider]: ["products", "product"],
     },
     pactOutDir: "./pacts",
     excludeHeaders: ["x-powered-by"],

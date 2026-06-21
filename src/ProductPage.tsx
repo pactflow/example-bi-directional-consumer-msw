@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
@@ -34,30 +34,36 @@ function ProductPage() {
     throw new Error("unable to fetch product data");
   }
 
-  const productInfo = product ? (
-    <div>
-      <p>ID: {product.id}</p>
-      <p>Name: {product.name}</p>
-      <p>Type: {product.type}</p>
-    </div>
-  ) : null;
+  let productInfo: ReactNode = null;
+  if (product) {
+    productInfo = (
+      <div>
+        <p>ID: {product.id}</p>
+        <p>Name: {product.name}</p>
+        <p>Type: {product.type}</p>
+      </div>
+    );
+  }
+
+  let content = productInfo;
+  if (loading) {
+    content = (
+      <div
+        style={{
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        className="loading loading-lg"
+      />
+    );
+  }
 
   return (
     <Layout>
       <Heading text="Products" href="/" />
-      {loading ? (
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          className="loading loading-lg"
-        />
-      ) : (
-        productInfo
-      )}
+      {content}
     </Layout>
   );
 }
