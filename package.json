@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.1",
-    "@pactflow/pact-msw-adapter": "3.0.1",
+    "@pactflow/pact-msw-adapter": "4.0.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
