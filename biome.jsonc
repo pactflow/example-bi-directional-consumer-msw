@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
 
   // Code formatting and organization suggestions
   "assist": {
@@ -65,7 +65,9 @@
             // noUnresolvedImports produces false positives for React
             "noUnresolvedImports": "off",
             // Qwik-specific rule not applicable to this React project
-            "useQwikValidLexicalScope": "off"
+            "useQwikValidLexicalScope": "off",
+            // Solid-specific rule - destructuring props is idiomatic in React
+            "noSolidDestructuredProps": "off"
           },
           "style": {
             // noJsxLiterals enforces i18n wrapping not needed in this example repo
