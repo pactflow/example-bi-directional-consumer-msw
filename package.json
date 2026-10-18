@@ -24,7 +24,8 @@
     "format:fix": "biome format --write .",
     "check": "biome check .",
     "check:fix": "biome check --write --unsafe .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "postinstall": "msw init"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
