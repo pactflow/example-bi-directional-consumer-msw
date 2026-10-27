@@ -28,7 +28,7 @@
     "postinstall": "msw init"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.2",
+    "@biomejs/biome": "2.6.3",
     "@pactflow/pact-msw-adapter": "3.0.1",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",
